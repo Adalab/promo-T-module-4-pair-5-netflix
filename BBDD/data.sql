@@ -39,3 +39,21 @@ INSERT INTO actors (name, lastname, country, year_birthday)
 VALUES('Tom', 'Hanks', 'Estados Unidos', '1956'),
 ('Roberto', 'Benigni', 'Italia', '1952'),
 ('John', 'Travolta', 'Estados Unidos', '1954');
+
+SELECT * FROM movies;
+
+SELECT title, genre FROM movies WHERE year>1990;
+
+SELECT title FROM movies WHERE category='TOP 10';
+
+UPDATE movies SET year=1997 WHERE title = 'La vita è bella';
+
+SELECT * FROM actors;
+
+SELECT name FROM actors WHERE year_birthday BETWEEN 1950 AND 1960;
+
+SELECT name, lastname FROM actors WHERE country='Estados Unidos';
+
+SELECT user FROM users WHERE plan_details='Standard';
+
+DELETE FROM users WHERE user LIKE 'M%';
