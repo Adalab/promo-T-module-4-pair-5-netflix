@@ -57,3 +57,25 @@ SELECT name, lastname FROM actors WHERE country='Estados Unidos';
 SELECT user FROM users WHERE plan_details='Standard';
 
 DELETE FROM users WHERE user LIKE 'M%';
+
+CREATE TABLE rel_movies_users (
+id INT not null auto_increment primary key,
+fkIdMovies INT,
+fkIdUsers INT,
+FOREIGN KEY (fkIdMovies) REFERENCES movies (id),
+FOREIGN KEY (fkIdUsers) REFERENCES users (idUser)
+);
+
+INSERT INTO rel_movies_users (fkIdMovies, fkIdUsers)
+VALUES ('1', '1'), ('2', '1'), ('2', '2');
+
+CREATE TABLE rel_movies_actors (
+id INT not null auto_increment primary key,
+fkIdActor INT,
+fkIdMovie INT,
+FOREIGN KEY (fkIdActor) REFERENCES actors (idActor),
+FOREIGN KEY (fkIdMovie) REFERENCES movies (id)
+);
+
+INSERT INTO rel_movies_actors (fkIdActor, fkIdMovie)
+VALUES ('1', '1'), ('2', '2'), ('3', '3');
