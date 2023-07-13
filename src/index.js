@@ -38,3 +38,5 @@ server.get('/movies', async (req, res) => {
     movies:  results
   });
 });
+
+server.use(express.static('./src/public-react'));
