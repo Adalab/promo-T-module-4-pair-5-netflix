@@ -28,9 +28,11 @@ async function connectDB () {
 connectDB();
 
 server.get('/movies', async (req, res) => {
-  const select = 'SELECT * FROM movies';
+  console.log(req.query);
+  // Condicional select
+  const select = `SELECT * FROM movies WHERE genre=?`;
   const connect = await connectDB();
-  const [result, cols] = await connect.query(select);
+  const [result, cols] = await connect.query(select, [req.query.genre]);
   console.log(result);
   connect.end();
   res.json({
@@ -40,3 +42,4 @@ server.get('/movies', async (req, res) => {
 });
 
 server.use(express.static('./src/public-react'));
+server.use(express.static('./src/public-movies-images'));
