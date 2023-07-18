@@ -29,16 +29,20 @@ connectDB();
 
 server.get('/movies', async (req, res) => {
   console.log(req.query);
-  // Condicional select
-  const select = `SELECT * FROM movies WHERE genre=?`;
-  const connect = await connectDB();
-  const [result, cols] = await connect.query(select, [req.query.genre]);
-  console.log(result);
-  connect.end();
-  res.json({
+  if (req.query.genre === "All"){
+    const select = `SELECT * FROM movies`;
+    console.log('hola')
+  } else {
+    const select = `SELECT * FROM movies WHERE genre=?`;
+    const connect = await connectDB();
+    const [result, cols] = await connect.query(select, [req.query.genre]);
+    console.log(result);
+    connect.end();
+    res.json({
     success: true,
     movies:  result
   });
+  }
 });
 
 server.use(express.static('./src/public-react'));
