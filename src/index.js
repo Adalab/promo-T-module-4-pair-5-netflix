@@ -29,20 +29,22 @@ connectDB();
 
 server.get('/movies', async (req, res) => {
   console.log(req.query);
+  const genreFilterParam = req.query.genre;
+  const sortFilterParam = req.query.sort;
+  let select = ``;
   if (req.query.genre === "All"){
-    const select = `SELECT * FROM movies`;
-    console.log('hola')
+    select = `SELECT * FROM movies ORDER BY title ${sortFilterParam}`;
   } else {
-    const select = `SELECT * FROM movies WHERE genre=?`;
-    const connect = await connectDB();
-    const [result, cols] = await connect.query(select, [req.query.genre]);
-    console.log(result);
-    connect.end();
-    res.json({
-    success: true,
-    movies:  result
-  });
-  }
+    select = `SELECT * FROM movies WHERE genre=? ORDER BY title ${sortFilterParam}`;
+  };
+  const connect = await connectDB();
+  const [result, cols] = await connect.query(select, [genreFilterParam]);
+  console.log(result);
+  res.json({
+  success: true,
+  movies:  result,
+  })
+  connect.end();
 });
 
 server.use(express.static('./src/public-react'));
