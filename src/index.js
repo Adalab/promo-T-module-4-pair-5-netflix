@@ -5,6 +5,7 @@ const mysql = require('mysql2/promise');
 const server = express();
 server.use(cors());
 server.use(express.json());
+server.set('view engine', 'ejs');
 
 // init express aplication
 const serverPort = 4000;
@@ -44,6 +45,18 @@ server.get('/movies', async (req, res) => {
   success: true,
   movies:  result,
   })
+  connect.end();
+});
+
+server.get('/movie/:movieId', async(req, res) => {
+  const movieId= req.params.movieId
+  console.log(movieId)
+  const select = 'SELECT * FROM movies WHERE id= ?'
+  const connect = await connectDB();
+  const [result, cols] = await connect.query(select, [parseInt(movieId)]);
+  console.log(result);
+  res.render('movie', result[0])
+  
   connect.end();
 });
 
